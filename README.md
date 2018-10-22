@@ -1,6 +1,29 @@
-# Shuffler
+# The Shuffler
 
-**TODO: Add description**
+Slack bot providing randomness as a service.
+
+Supported slack commands:
+
+### Shuffle
+
+```
+/shuffle john jane jack
+```
+
+### Random
+
+```
+/random red green orange
+/random 10
+/random 0..100
+/random help
+```
+
+### Dice
+
+```
+/dice
+```
 
 ## Installation
 
@@ -18,4 +41,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/shuffler](https://hexdocs.pm/shuffler).
-
