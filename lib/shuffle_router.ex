@@ -72,6 +72,8 @@ defmodule ShuffleRouter do
       client_secret: System.get_env("SLACK_CLIENT_SECRET"),
     }
     response = HTTPotion.post(url, body: URI.encode_query(params), headers: ["Content-Type": "application/x-www-form-urlencoded"])
+    # TODO: Send a success response to the user
+    # TODO: Store the team_name and team_id this was saved in
     json = Jason.decode!(response.body)
     send_resp(conn, 404, index_html(inspect(json)))
   end

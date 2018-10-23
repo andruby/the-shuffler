@@ -14,9 +14,9 @@ Supported slack commands:
 
 ```
 /random red green orange
-/random 10
-/random 0..100
-/random help
+# /random 10
+# /random 0..100
+# /random help
 ```
 
 ### Dice
