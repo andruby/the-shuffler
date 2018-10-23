@@ -8,7 +8,7 @@ defmodule Shuffler.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      Plug.Cowboy.child_spec(scheme: :http, plug: ShuffleRouter, options: [port: 4001])
+      Plug.Cowboy.child_spec(scheme: :http, plug: ShuffleRouter, options: [port: 4000])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
