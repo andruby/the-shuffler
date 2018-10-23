@@ -9,18 +9,6 @@ defmodule ShuffleRouter do
 
   EEx.function_from_file(:def, :index_html, "view/index.html.eex", [:error])
 
-  get "/" do
-    send_resp(conn, 200, index_html(nil))
-  end
-
-  get "/direct-slack-install" do
-    send_resp(conn, 302, "https://slack.com/oauth/authorize?scope=commands&client_id=2168100599.461590182420")
-  end
-
-  get "/oauth_callback" do
-    send_resp(conn, 200, index_html(conn.params["error"]))
-  end
-
   post "/shuffle" do
     shuffled = conn.params["text"]
     |> String.split(" ")
@@ -44,6 +32,23 @@ defmodule ShuffleRouter do
     slack_respond(conn, roll)
   end
 
+  get "/" do
+    send_resp(conn, 200, index_html(nil))
+  end
+
+  get "/direct-slack-install" do
+    conn
+    |> put_resp_header("location", "https://slack.com/oauth/authorize?scope=commands&client_id=2168100599.461590182420")
+    |> send_resp(302, "You are being redirected")
+  end
+
+  get "/oauth_callback" do
+    case conn.params["error"] do
+      nil -> get_oauth_access_token(conn)
+      error -> send_resp(conn, 200, index_html(conn.params["error"]))
+    end
+  end
+
   match _ do
     send_resp(conn, 404, index_html("404 Not Found"))
   end
@@ -57,5 +62,14 @@ defmodule ShuffleRouter do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, json)
+  end
+
+  defp get_oauth_access_token(conn) do
+    code = conn.params["code"]
+    # POST https://slack.com/api/oauth.access as application/x-www-form-urlencoded
+    # code: code
+    # client_id: ENV[]
+    # client_secret: ENV[]
+    # Get the team_name and team_id and store it somewhere.
   end
 end
