@@ -7,10 +7,18 @@ defmodule ShuffleRouter do
   plug :match
   plug :dispatch
 
-  EEx.function_from_file(:def, :index_html, "view/index.html.eex", [])
+  EEx.function_from_file(:def, :index_html, "view/index.html.eex", [:error])
 
   get "/" do
-    send_resp(conn, 200, index_html())
+    send_resp(conn, 200, index_html(nil))
+  end
+
+  get "/direct-slack-install" do
+    send_resp(conn, 302, "https://slack.com/oauth/authorize?scope=commands&client_id=2168100599.461590182420")
+  end
+
+  get "/oauth_callback" do
+    send_resp(conn, 200, index_html(conn.params["error"]))
   end
 
   post "/shuffle" do
@@ -37,7 +45,7 @@ defmodule ShuffleRouter do
   end
 
   match _ do
-    send_resp(conn, 404, "oops")
+    send_resp(conn, 404, index_html("404 Not Found"))
   end
 
   defp slack_respond(conn, text) do
