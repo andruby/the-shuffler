@@ -1,4 +1,5 @@
 defmodule ShuffleRouter do
+  require EEx
   use Plug.Router
 
   plug Plug.Logger
@@ -6,8 +7,10 @@ defmodule ShuffleRouter do
   plug :match
   plug :dispatch
 
+  EEx.function_from_file(:def, :index_html, "view/index.html.eex", [])
+
   get "/" do
-    send_resp(conn, 200, "hello")
+    send_resp(conn, 200, index_html())
   end
 
   post "/shuffle" do
