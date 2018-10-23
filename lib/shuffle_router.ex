@@ -6,6 +6,10 @@ defmodule ShuffleRouter do
   plug :match
   plug :dispatch
 
+  get "/" do
+    send_resp(conn, 200, "hello")
+  end
+
   post "/shuffle" do
     shuffled = conn.params["text"]
     |> String.split(" ")
