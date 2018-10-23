@@ -7,7 +7,7 @@ defmodule ShuffleRouter do
   plug :match
   plug :dispatch
 
-  EEx.function_from_file(:def, :index_html, "view/index.html.eex", [:error])
+  EEx.function_from_file(:def, :index_html, "view/index.html.eex", [:options])
 
   post "/shuffle" do
     shuffled = conn.params["text"]
@@ -33,7 +33,7 @@ defmodule ShuffleRouter do
   end
 
   get "/" do
-    send_resp(conn, 200, index_html(nil))
+    send_resp(conn, 200, index_html(%{}))
   end
 
   get "/direct-slack-install" do
@@ -45,12 +45,12 @@ defmodule ShuffleRouter do
   get "/oauth_callback" do
     case conn.params["error"] do
       nil -> get_oauth_access_token(conn)
-      error -> send_resp(conn, 200, index_html(error))
+      error -> send_resp(conn, 200, index_html(error: error))
     end
   end
 
   match _ do
-    send_resp(conn, 404, index_html("404 Not Found"))
+    send_resp(conn, 404, index_html(error: "404 Not Found"))
   end
 
   defp slack_respond(conn, text) do
@@ -75,6 +75,12 @@ defmodule ShuffleRouter do
     # TODO: Send a success response to the user
     # TODO: Store the team_name and team_id this was saved in
     json = Jason.decode!(response.body)
-    send_resp(conn, 404, index_html(inspect(json)))
+    case json["ok"] do
+      true ->
+        IO.puts "App successfully installed to #{json["team_name"]}"
+        send_resp(conn, 404, index_html(notice: "App successfully installed to #{json["team_name"]}"))
+      false ->
+        send_resp(conn, 404, index_html(error: inspect(json)))
+    end
   end
 end

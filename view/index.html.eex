@@ -7,9 +7,14 @@
   </head>
   <body>
     <h1>The Shuffler</h1>
-    <%= if error do %>
+    <%= if options[:error] do %>
       <p>
-        <strong>Error:</strong> <%= error %>
+        <strong>Error:</strong> <%= options[:error] %>
+      </p>
+    <% end %>
+    <%= if options[:notice] do %>
+      <p>
+        <strong><%= options[:notice] %></strong>
       </p>
     <% end %>
     <a href="https://slack.com/oauth/authorize?scope=commands&client_id=2168100599.461590182420">
