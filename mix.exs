@@ -24,6 +24,7 @@ defmodule Shuffler.MixProject do
     [
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.1"},
+      {:httpotion, "~> 3.1.0"},
     ]
   end
 end

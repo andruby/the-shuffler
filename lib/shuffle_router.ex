@@ -45,7 +45,7 @@ defmodule ShuffleRouter do
   get "/oauth_callback" do
     case conn.params["error"] do
       nil -> get_oauth_access_token(conn)
-      error -> send_resp(conn, 200, index_html(conn.params["error"]))
+      error -> send_resp(conn, 200, index_html(error))
     end
   end
 
@@ -65,11 +65,14 @@ defmodule ShuffleRouter do
   end
 
   defp get_oauth_access_token(conn) do
-    code = conn.params["code"]
-    # POST https://slack.com/api/oauth.access as application/x-www-form-urlencoded
-    # code: code
-    # client_id: ENV[]
-    # client_secret: ENV[]
-    # Get the team_name and team_id and store it somewhere.
+    url = "https://slack.com/api/oauth.access"
+    params = %{
+      code: conn.params["code"],
+      client_id: System.get_env("SLACK_CLIENT_ID"),
+      client_secret: System.get_env("SLACK_CLIENT_SECRET"),
+    }
+    response = HTTPotion.post(url, body: URI.encode_query(params), headers: ["Content-Type": "application/x-www-form-urlencoded"])
+    json = Jason.decode!(response.body)
+    send_resp(conn, 404, index_html(inspect(json)))
   end
 end
