@@ -14,6 +14,7 @@ defmodule ShuffleRouter do
     shuffled = conn.params["text"]
     |> String.split(" ")
     |> Enum.shuffle
+    |> Enum.join(" ")
 
     slack_respond(conn, shuffled)
   end
