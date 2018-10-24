@@ -1,6 +1,8 @@
 # The Shuffler
 
-Slack bot providing randomness as a service.
+Slack bot providing Randomness-as-a-Service.
+
+Visit https://shuffler.bedesign.be to add it to your Slack.
 
 Supported slack commands:
 
