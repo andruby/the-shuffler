@@ -20,7 +20,7 @@ defmodule Shuffler.Application do
   end
 
   defp better_rand_seed do
-    IO.puts "Providing the PRNG with a better seed and algo"
+    IO.puts "Providing the PRNG with a better algo and seed from RANDOM.org"
     uints = RandomOrgApi.random_org_ints(3, 32) |> List.to_tuple
     :rand.seed(:exsplus, uints)
   end
