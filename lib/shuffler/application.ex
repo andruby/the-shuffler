@@ -21,8 +21,7 @@ defmodule Shuffler.Application do
 
   defp better_rand_seed do
     IO.puts "Providing the PRNG with a better seed and algo"
-    # TODO try and get some bytes from random.org
-    << i1 :: unsigned-integer-32, i2 :: unsigned-integer-32, i3 :: unsigned-integer-32>> = :crypto.strong_rand_bytes(12)
-    :rand.seed(:exsplus, {i1, i2, i3})
+    uints = RandomOrgApi.random_org_ints(3, 32) |> List.to_tuple
+    :rand.seed(:exsplus, uints)
   end
 end

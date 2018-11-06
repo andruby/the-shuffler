@@ -65,6 +65,7 @@ defmodule ShuffleRouter do
   end
 
   defp get_oauth_access_token(conn) do
+    # TODO: Extract into SlackAPI lib with Tesla
     url = "https://slack.com/api/oauth.access"
     params = %{
       code: conn.params["code"],
