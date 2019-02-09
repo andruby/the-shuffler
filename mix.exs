@@ -26,6 +26,9 @@ defmodule Shuffler.MixProject do
       {:jason, "~> 1.1"},
       {:httpotion, "~> 3.1.0"},
       {:tesla, "~> 1.2.0"},
+      {:ecto, "~> 3.0.6"},
+      {:ecto_sql, "~> 3.0.4"},
+      {:postgrex, "~> 0.14.1"},
     ]
   end
 end
