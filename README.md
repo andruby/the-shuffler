@@ -1,5 +1,7 @@
 # Shuffler
 
+Slack Bot that adds `/shuffle things you want in random order`, `/random` and `/dice` commands
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
