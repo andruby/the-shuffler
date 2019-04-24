@@ -1,3 +1,8 @@
 /* This file is for your main application css. */
 
 @import "./phoenix.css";
+@import "./milligram_dark.css";
+
+.example .column-demo {
+  background: #141518;
+}
