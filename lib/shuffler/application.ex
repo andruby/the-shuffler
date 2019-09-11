@@ -6,7 +6,7 @@ defmodule Shuffler.Application do
   use Application
 
   def start(_type, _args) do
-    better_rand_seed()
+    # better_rand_seed()
 
     # List all child processes to be supervised
     children = [
